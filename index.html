@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إياد عماد شاكر | مطور مواقع & تطبيقات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-primary: #0d0d0f;
+      --bg-secondary: #111113;
+      --bg-dark: #0a0a0c;
+      --accent: #7F77DD;
+      --accent-dark: #534AB7;
+      --accent-light: #AFA9EC;
+      --teal: #5DCAA5;
+      --teal-dark: #1D9E75;
+      --pink: #ED93B1;
+      --amber: #EF9F27;
+      --text-primary: #ffffff;
+      --text-secondary: #aaaaaa;
+      --text-muted: #666666;
+      --border: #222222;
+      --border-light: #2a2a2e;
+      --font: 'Cairo', sans-serif;
+      --radius: 10px;
+      --radius-lg: 16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      direction: rtl;
+      line-height: 1.7;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .navbar {
+      position: fixed;
+      top: 0; right: 0; left: 0;
+      z-index: 1000;
+      background: rgba(13,13,15,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+      transition: all 0.3s;
+    }
+    .navbar.scrolled {
+      background: rgba(13,13,15,0.98);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { font-size: 18px; font-weight: 700; color: #fff; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { font-size: 14px; color: var(--text-secondary); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent-light); }
+    .menu-btn { display: none; background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; }
+
+    .hero { padding: 120px 24px 60px; max-width: 1100px; margin: 0 auto; }
+    .hero-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 56px;
+    }
+    .hero-text { flex: 1; }
+    .hero-tag {
+      display: inline-block;
+      background: #1e1c36;
+      color: var(--accent-light);
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 0.5px solid var(--accent-dark);
+      margin-bottom: 18px;
+    }
+    .hero h1 { font-size: 38px; font-weight: 700; line-height: 1.25; margin-bottom: 14px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { font-size: 15px; color: var(--text-secondary); max-width: 480px; margin-bottom: 28px; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--accent-dark);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-family: var(--font);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1a2e1a;
+      color: var(--teal);
+      border: 0.5px solid var(--teal-dark);
+      padding: 12px 22px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .btn-whatsapp:hover { background: #1f3a1f; transform: translateY(-2px); }
+    .btn-full { width: 100%; text-align: center; display: block; }
+
+    .hero-photo { position: relative; flex-shrink: 0; }
+    .hero-photo img {
+      width: 220px;
+      height: 280px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--accent-dark);
+      display: block;
+    }
+    .photo-badge {
+      position: absolute;
+      bottom: -12px; right: -12px;
+      background: #1a2e1a;
+      color: var(--teal);
+      border: 0.5px solid var(--teal-dark);
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 12px;
+      border-left: 0.5px solid var(--border);
+    }
+    .stat:last-child { border-left: none; }
+    .stat-num { font-size: 26px; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    .section { padding: 72px 24px; }
+    .section-dark { background: var(--bg-secondary); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+    .section-title { font-size: 28px; font-weight: 700; margin-bottom: 32px; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .service-card {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .service-card:hover { border-color: var(--accent-dark); transform: translateY(-3px); }
+    .service-icon {
+      font-size: 28px;
+      width: 50px; height: 50px;
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .service-icon.purple { background: #1e1c36; }
+    .service-icon.teal   { background: #0e2020; }
+    .service-icon.pink   { background: #1e1420; }
+    .service-icon.amber  { background: #1a1a0e; }
+    .service-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .service-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    .about-container { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .about-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.8; }
+    .about-skills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      background: #1e1c36;
+      color: var(--accent-light);
+      border: 0.5px solid var(--accent-dark);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .social-cards { display: flex; flex-direction: column; gap: 12px; }
+    .social-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      border: 0.5px solid var(--border);
+      background: var(--bg-primary);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .social-card:hover { transform: translateX(-4px); }
+    .social-card.insta:hover { border-color: var(--pink); }
+    .social-card.fb:hover    { border-color: var(--accent); }
+    .social-card.wa:hover    { border-color: var(--teal); }
+    .social-icon { font-size: 22px; }
+    .social-name { font-size: 13px; font-weight: 600; }
+    .social-handle { font-size: 11px; color: var(--text-muted); }
+
+    .instapay-card {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--teal-dark);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .instapay-left { display: flex; align-items: center; gap: 18px; }
+    .instapay-icon {
+      font-size: 28px; width: 54px; height: 54px;
+      background: #0e2020; border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .instapay-card h3 { font-size: 15px; font-weight: 600; color: var(--teal); margin-bottom: 4px; }
+    .instapay-card p { font-size: 13px; color: var(--text-muted); }
+    .btn-instapay {
+      background: #0e2020; color: var(--teal);
+      border: 0.5px solid var(--teal-dark);
+      padding: 12px 22px; border-radius: var(--radius);
+      font-size: 13px; font-family: var(--font);
+      white-space: nowrap; transition: all 0.2s;
+    }
+    .btn-instapay:hover { background: #1a2e1a; transform: translateY(-2px); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 12px; max-width: 600px; margin-bottom: 32px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .contact-form input,
+    .contact-form textarea {
+      background: #1a1a1d;
+      border: 0.5px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 14px; font-family: var(--font);
+      color: var(--text-primary);
+      transition: border-color 0.2s; direction: rtl;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus { outline: none; border-color: var(--accent-dark); }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: var(--text-muted); }
+    .contact-form textarea { resize: vertical; }
+    .contact-direct p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+    .direct-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .direct-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--bg-primary); border: 0.5px solid var(--border);
+      padding: 9px 16px; border-radius: var(--radius);
+      font-size: 13px; color: var(--text-secondary); transition: all 0.2s;
+    }
+    .direct-link:hover { border-color: var(--accent-dark); color: var(--accent-light); }
+
+    .footer { background: var(--bg-dark); border-top: 0.5px solid var(--border); padding: 24px; }
+    .footer-container { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .footer p { font-size: 12px; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-links a { font-size: 12px; color: var(--text-muted); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent-light); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; right: 0; left: 0;
+        background: var(--bg-secondary);
+        padding: 16px 24px;
+        border-top: 0.5px solid var(--border); gap: 16px;
+      }
+      .menu-btn { display: block; }
+      .hero-container { flex-direction: column-reverse; align-items: center; text-align: center; }
+      .hero p { max-width: 100%; }
+      .hero-btns { justify-content: center; }
+      .hero h1 { font-size: 28px; }
+      .hero-photo img { width: 160px; height: 200px; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-container { grid-template-columns: 1fr; }
+      .instapay-card { flex-direction: column; align-items: flex-start; }
+      .btn-instapay { width: 100%; text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-container { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="logo">Iyad<span>.</span>dev</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services">الخدمات</a></li>
+        <li><a href="#about">من أنا</a></li>
+        <li><a href="#payment">الدفع</a></li>
+        <li><a href="#contact">تواصل</a></li>
+      </ul>
+      <button class="menu-btn" id="menuBtn">&#9776;</button>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-container">
+      <div class="hero-text">
+        <div class="hero-tag">Web Developer & Digital Marketer</div>
+        <h1>إياد عماد شاكر<br /><span>مطور مواقع & تطبيقات</span></h1>
+        <p>أصمم وأطور مواقع ويب وتطبيقات موبايل احترافية، مع استراتيجيات تسويق رقمي متكاملة لتنمية أعمالك.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-primary">تواصل معي</a>
+          <a href="https://wa.me/201027102753" target="_blank" class="btn-whatsapp">💬 واتساب</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+    <img src="c:\Users\Eyad\Downloads\gpg.jpg" alt="إياد عماد شاكر" />
+        <div class="photo-badge">متاح للعمل ✓</div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">50+</span><span class="stat-label">مشروع منجز</span></div>
+      <div class="stat"><span class="stat-num">30+</span><span class="stat-label">عميل راضي</span></div>
+      <div class="stat"><span class="stat-num">3+</span><span class="stat-label">سنوات خبرة</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">جودة مضمونة</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-label">ما أقدر أعمله</div>
+      <h2 class="section-title">خدماتي</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon purple">🌐</div>
+          <h3>تصميم مواقع ويب</h3>
+          <p>مواقع احترافية سريعة ومتجاوبة مع جميع الأجهزة بأحدث التقنيات</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon teal">📱</div>
+          <h3>تطبيقات موبايل</h3>
+          <p>تطبيقات iOS و Android بتجربة مستخدم رائعة وأداء عالي</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon pink">📣</div>
+          <h3>ديجيتال ماركتينج</h3>
+          <p>استراتيجيات تسويق رقمي متكاملة تزيد من وصولك ومبيعاتك</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon amber">🔍</div>
+          <h3>SEO تحسين محركات البحث</h3>
+          <p>ظهور موقعك في أول نتائج جوجل وزيادة الزيارات المجانية</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="about">
+    <div class="container about-container">
+      <div>
+        <div class="section-label">من أنا</div>
+        <h2 class="section-title">إياد عماد شاكر</h2>
+        <p class="about-text">مطور مواقع ويب وتطبيقات موبايل متخصص في بناء حلول رقمية متكاملة. أجمع بين التصميم الجمالي والكود الاحترافي لأقدم منتجات تخدم أعمالك وتجذب عملاءك.</p>
+        <div class="about-skills">
+          <span class="skill-tag">HTML / CSS</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Flutter</span>
+          <span class="skill-tag">SEO</span>
+          <span class="skill-tag">Social Media</span>
+          <span class="skill-tag">Google Ads</span>
+        </div>
+      </div>
+      <div class="social-cards">
+        <a href="https://www.instagram.com/eyad_zahran515" target="_blank" class="social-card insta">
+          <span class="social-icon">📸</span>
+          <div><div class="social-name">Instagram</div><div class="social-handle">@eyad_zahran515</div></div>
+        </a>
+        <a href="https://www.facebook.com/share/1bp95JFTwi/" target="_blank" class="social-card fb">
+          <span class="social-icon">👍</span>
+          <div><div class="social-name">Facebook</div><div class="social-handle">ُEyad Emad</div></div>
+        </a>
+        <a href="https://wa.me/201027102753" target="_blank" class="social-card wa">
+          <span class="social-icon">💬</span>
+          <div><div class="social-name">WhatsApp</div><div class="social-handle">01027102753</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="payment">
+    <div class="container">
+      <div class="section-label">ادفع بسهولة</div>
+      <h2 class="section-title">إنستاباي</h2>
+      <div class="instapay-card">
+        <div class="instapay-left">
+          <div class="instapay-icon">💳</div>
+          <div>
+            <h3>eyademad515@instapay</h3>
+            <p>ادفع مقابل خدماتي بسهولة وأمان عبر إنستاباي</p>
+          </div>
+        </div>
+        <a href="https://ipn.eg/S/eyademad515/instapay/5qbuPK" target="_blank" class="btn-instapay">ادفع الآن ←</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="contact">
+    <div class="container">
+      <div class="section-label">ابدأ مشروعك</div>
+      <h2 class="section-title">تواصل معي</h2>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <input type="text" placeholder="اسمك" required />
+          <input type="email" placeholder="بريدك الإلكتروني" required />
+        </div>
+        <input type="text" placeholder="موضوع الرسالة" />
+        <textarea placeholder="اكتب رسالتك هنا..." rows="5" required></textarea>
+        <button type="submit" class="btn-primary btn-full">إرسال الرسالة ←</button>
+      </form>
+      <div class="contact-direct">
+        <p>أو تواصل مباشرة:</p>
+        <div class="direct-links">
+          <a href="https://wa.me/201027102753" target="_blank" class="direct-link">💬 واتساب: 01027102753</a>
+          <a href="https://www.instagram.com/eyad_zahran515" target="_blank" class="direct-link">📸 إنستاغرام</a>
+          <a href="https://www.facebook.com/share/1bp95JFTwi/" target="_blank" class="direct-link">👍 فيسبوك</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="logo">Iyad<span>.</span>dev</div>
+      <p>© 2026 إياد عماد شاكر. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/eyad_zahran515" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/share/1bp95JFTwi/" target="_blank">Facebook</a>
+        <a href="https://wa.me/201027102753" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = contactForm.querySelector('button[type="submit"]');
+      btn.textContent = 'تم الإرسال ✓';
+      btn.style.background = '#1D9E75';
+      setTimeout(() => {
+        btn.textContent = 'إرسال الرسالة ←';
+        btn.style.background = '';
+        contactForm.reset();
+      }, 3000);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card, .social-card, .instapay-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
